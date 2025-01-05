@@ -37,43 +37,26 @@ Docker Compose comes pre-installed with Docker Desktop. To install it separately
 #### **Writing a `docker-compose.yml` File**
 The core of Docker Compose is the YAML configuration file, which defines all the services, networks, and volumes needed for your application.
 
+**Docker Command:**
+
+```docker run -d --name nginx_container -p 8080:80 nginx:latest```
+
 **Basic Structure:**
 ```yaml
-version: "3.8"  # Specify Compose file format
+version: '3.9'
+
 services:
-  app:
-    image: my-app:latest  # Image name
-    build:
-      context: ./app  # Path to Dockerfile
+  nginx:
+    image: nginx:latest
+    container_name: nginx_container
     ports:
-      - "8080:80"  # Map host port 8080 to container port 80
-    volumes:
-      - app-data:/var/www/html
-    networks:
-      - app-network
-
-  db:
-    image: mysql:8.0
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: mydb
-    volumes:
-      - db-data:/var/lib/mysql
-    networks:
-      - app-network
-
-volumes:
-  app-data:
-  db-data:
-
-networks:
-  app-network:
+      - "8080:80" # Maps port 8080 on the host to port 80 in the container
 ```
 
-**Explanation:**
-- **`services`**: Defines the containers (e.g., `app`, `db`).
-- **`volumes`**: Persistent storage shared between host and container.
-- **`networks`**: Isolated communication channels between services.
+### Explanation:
+- **`image: nginx:latest`**: Specifies the Nginx image to use.
+- **`container_name: nginx_container`**: Assigns the container a specific name (`nginx_container`).
+- **`ports`**: Maps port `8080` on the host to port `80` in the container, allowing access to Nginx.
 
 ---
 
